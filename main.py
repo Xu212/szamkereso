@@ -1,3 +1,6 @@
+from colorama import init
+init()
+
 numbers = [
     100847, 535942, 82760, 193097, 590573, 854689, 2254, 685232,
     854781, 262321, 690067, 963085, 41075, 728201, 4707, 760822
@@ -21,8 +24,8 @@ def jobble(matrix, numbers):
     cols = len(matrix[0])
 
     directions = [(1,1), (-1,-1)]
-
     results = []
+    highlight = set()
 
     for number in numbers:
         digits = list(map(int, str(number)))
@@ -50,13 +53,27 @@ def jobble(matrix, numbers):
 
                         path.append((nr, nc))
                         i += 1
+
                     if i == len(digits):
                         found_positions.append(path)
-                        print(found_positions)
+                        highlight.update(path)
 
         results.append(found_positions)
 
-    return results
+    return results, highlight
 
 
-print(jobble(matrix, numbers))
+results, highlight = jobble(matrix, numbers)
+print("Találatok:")
+for i, res in enumerate(results):
+    if res:
+        print(f"{numbers[i]} -> {res}")
+print("\nSzínezett mátrix:")
+
+for r in range(len(matrix)):
+    for c in range(len(matrix[0])):
+        if (r, c) in highlight:
+            print(f"\033[42m{matrix[r][c]}\033[0m", end=" ")
+        else:
+            print(matrix[r][c], end=" ")
+    print()
