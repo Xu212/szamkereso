@@ -25,7 +25,6 @@ def jobble(matrix, numbers):
 
     directions = [(1,1), (-1,-1)]
     results = []
-    highlight = set()
 
     for number in numbers:
         digits = list(map(int, str(number)))
@@ -55,25 +54,20 @@ def jobble(matrix, numbers):
                         i += 1
 
                     if i == len(digits):
-                        found_positions.append(path)
-                        highlight.update(path)
+                        direction = "↘" if (dr, dc) == (1,1) else "↖"
+                        found_positions.append((r, c, direction))
 
         results.append(found_positions)
 
-    return results, highlight
+    return results
 
 
-results, highlight = jobble(matrix, numbers)
-print("Találatok:")
+results = jobble(matrix, numbers)
+
 for i, res in enumerate(results):
     if res:
-        print(f"{numbers[i]} -> {res}")
-print("\nSzínezett mátrix:")
-
-for r in range(len(matrix)):
-    for c in range(len(matrix[0])):
-        if (r, c) in highlight:
-            print(f"\033[42m{matrix[r][c]}\033[0m", end=" ")
-        else:
-            print(matrix[r][c], end=" ")
-    print()
+        print(f"{numbers[i]}:")
+        for r, c, d in res:
+            print(f"  sor: {r+1}, oszlop: {c+1}, irány: {d}")
+    else:
+        print(f"{numbers[i]}: nincs találat")
