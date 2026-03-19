@@ -1,8 +1,8 @@
-
 numbers = [
     100847, 535942, 82760, 193097, 590573, 854689, 2254, 685232,
     854781, 262321, 690067, 963085, 41075, 728201, 4707, 760822
 ]
+
 matrix = [
     [7, 9, 8, 6, 4, 5, 8, 0, 9, 8],
     [6, 6, 1, 3, 8, 6, 7, 9, 1, 6],
@@ -16,5 +16,47 @@ matrix = [
     [9, 9, 5, 4, 1, 3, 9, 3, 7, 4]
 ]
 
-print(numbers)
-print(matrix)
+def jobble(matrix, numbers):
+    rows = len(matrix)
+    cols = len(matrix[0])
+
+    directions = [(1,1), (-1,-1)]
+
+    results = []
+
+    for number in numbers:
+        digits = list(map(int, str(number)))
+        found_positions = []
+
+        for r in range(rows):
+            for c in range(cols):
+                if matrix[r][c] != digits[0]:
+                    continue
+
+                for dr, dc in directions:
+                    path = [(r, c)]
+                    nr, nc = r, c
+                    i = 1
+
+                    while i < len(digits):
+                        nr += dr
+                        nc += dc
+
+                        if not (0 <= nr < rows and 0 <= nc < cols):
+                            break
+
+                        if matrix[nr][nc] != digits[i]:
+                            break
+
+                        path.append((nr, nc))
+                        i += 1
+                    if i == len(digits):
+                        found_positions.append(path)
+                        print(found_positions)
+
+        results.append(found_positions)
+
+    return results
+
+
+print(jobble(matrix, numbers))
