@@ -14,26 +14,26 @@ def jobble(matrix, numbers):
                 if matrix[r][c] != digits[0]:
                     continue
 
-                for dr, dc in directions:
+                for directionRow, directionColumn in directions:
                     path = [(r, c)]
-                    nr, nc = r, c
+                    nextRow, nextColumn = r, c
                     i = 1
 
                     while i < len(digits):
-                        nr += dr
-                        nc += dc
+                        nextRow += directionRow
+                        nextColumn += directionColumn
 
-                        if not (0 <= nr < rows and 0 <= nc < cols):
+                        if not (0 <= nextRow < rows and 0 <= nextColumn < cols):
                             break
 
-                        if matrix[nr][nc] != digits[i]:
+                        if matrix[nextRow][nextColumn] != digits[i]:
                             break
 
-                        path.append((nr, nc))
+                        path.append((nextRow, nextColumn))
                         i += 1
 
                     if i == len(digits):
-                        direction = "↘" if (dr, dc) == (1,1) else "↖"
+                        direction = "↘" if (directionRow, directionColumn) == (1,1) else "↖"
                         found_positions.append((r, c, direction))
 
         results.append(found_positions)
