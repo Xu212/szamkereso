@@ -131,9 +131,9 @@ def balra_le(matrix, numbers):
                             else:
 
                                 break      
-
-jobbra_fel(matrix,numbers)
-balra_le(matrix,numbers)
+def megoldas(matrix,numbers):
+    jobbra_fel(matrix,numbers)
+    balra_le(matrix,numbers)
 
 
 

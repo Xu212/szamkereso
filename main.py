@@ -1,6 +1,7 @@
-from colorama import init
-init()
-
+import jobb_bal
+import jobb_le
+import lefelfelle
+import Progal_L_Bence
 numbers = [
     100847, 535942, 82760, 193097, 590573, 854689, 2254, 685232,
     854781, 262321, 690067, 963085, 41075, 728201, 4707, 760822
@@ -18,56 +19,11 @@ matrix = [
     [0, 4, 9, 5, 1, 9, 3, 0, 9, 7],
     [9, 9, 5, 4, 1, 3, 9, 3, 7, 4]
 ]
-
-def jobble(matrix, numbers):
-    rows = len(matrix)
-    cols = len(matrix[0])
-
-    directions = [(1,1), (-1,-1)]
-    results = []
-
-    for number in numbers:
-        digits = list(map(int, str(number)))
-        found_positions = []
-
-        for r in range(rows):
-            for c in range(cols):
-                if matrix[r][c] != digits[0]:
-                    continue
-
-                for dr, dc in directions:
-                    path = [(r, c)]
-                    nr, nc = r, c
-                    i = 1
-
-                    while i < len(digits):
-                        nr += dr
-                        nc += dc
-
-                        if not (0 <= nr < rows and 0 <= nc < cols):
-                            break
-
-                        if matrix[nr][nc] != digits[i]:
-                            break
-
-                        path.append((nr, nc))
-                        i += 1
-
-                    if i == len(digits):
-                        direction = "↘" if (dr, dc) == (1,1) else "↖"
-                        found_positions.append((r, c, direction))
-
-        results.append(found_positions)
-
-    return results
-
-
-results = jobble(matrix, numbers)
-
-for i, res in enumerate(results):
-    if res:
-        print(f"{numbers[i]}:")
-        for r, c, d in res:
-            print(f"  sor: {r+1}, oszlop: {c+1}, irány: {d}")
-    else:
-        print(f"{numbers[i]}: nincs találat")
+print("Függőlegesen megtalált számok:")
+lefelfelle.print_vertical_findings(matrix,numbers)
+print("Vízszintesen megtalált számok :", end= "")
+Progal_L_Bence.megoldas(matrix,numbers)
+print("Átlósan felfelé megtalált számok: ",end="")
+jobb_bal.jobb_bal_keres(matrix, numbers)
+print("Átlósan lefelé megtalált számok: ", end="")
+jobb_le.showResult(matrix, numbers)

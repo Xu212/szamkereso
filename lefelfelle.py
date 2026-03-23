@@ -21,14 +21,6 @@ def lefelszamok(n):
 
 
 def find_numbers_vertical(matrix, numbers):
-    """Keres függőlegesen (fentről lefelé és lentről felfelé) a számokat.
-
-    Visszatér lista elemekkel:
-      (szám, talált, irány, kezdő_sor, oszlop, vég_sor)
-
-    irány: 'down' vagy 'up'
-    sor/oszlop 0-indexelt.
-    """
     n = len(matrix)
     if n == 0:
         return []
@@ -43,7 +35,6 @@ def find_numbers_vertical(matrix, numbers):
 
         for c in range(m):
             for r in range(n):
-                # lefelé
                 if r + tlen <= n:
                     ok = True
                     for k in range(tlen):
@@ -53,8 +44,6 @@ def find_numbers_vertical(matrix, numbers):
                     if ok:
                         found_any = True
                         results.append((num, True, 'down', (r, c), (r + tlen - 1, c)))
-
-                # felfelé
                 if r - tlen + 1 >= 0:
                     ok = True
                     for k in range(tlen):
